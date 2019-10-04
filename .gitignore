@@ -9,6 +9,7 @@
 !/app/**/*.hs
 !/src/**/*.hs
 !/test/**/*.hs
+!/scripts/**/*.hs
 
 # Stack
 !/package.yaml
