@@ -1,0 +1,20 @@
+# Ignore All
+*
+!*/
+
+# Git
+!*.gitignore
+
+# Haskell
+!/app/**/*.hs
+!/src/**/*.hs
+!/test/**/*.hs
+
+# Stack
+!/package.yaml
+!/stack.yaml
+!/Setup.hs
+
+!/ChangeLog.md
+!/LICENSE
+!/README.md
