@@ -5,6 +5,10 @@
 # Git
 !*.gitignore
 
+# Vscode
+!/.vscode/launch.json
+!/.vscode/tasks.json
+
 # Haskell
 !/app/**/*.hs
 !/src/**/*.hs
