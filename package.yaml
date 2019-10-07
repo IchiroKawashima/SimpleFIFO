@@ -27,6 +27,7 @@ dependencies:
 - clash-ghc
 - clash-lib
 - clash-prelude
+- text
 
 library:
   source-dirs: src
@@ -84,4 +85,5 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
+    - hspec
     - SimpleFIFO

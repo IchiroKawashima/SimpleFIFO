@@ -3,6 +3,8 @@ module Main where
 import           Clash.Prelude
 import           Clash.Explicit.Testbench
 
+import qualified Data.Text.IO                  as T
+
 import           Fifo
 
 {-# ANN topEntity (Synthesize
@@ -52,4 +54,9 @@ testData =
         :> Nil
 
 main :: IO ()
-main = print $ sampleN 10 testBench
+main = do
+    vcd <- dumpVCD (0, 10) testBench ["inputData"]
+
+    case vcd of
+        Left  msg -> error msg
+        Right cnt -> T.writeFile "dump.vcd" cnt
