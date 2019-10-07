@@ -44,6 +44,8 @@ extra-deps:
 - clash-lib-1.0.0@sha256:10e219e941b229810e66d1ed9dd8d37b45cc7908348788f8b7e0e843bf3952a4
 - clash-prelude-1.0.0@sha256:0c2ba743a2411ef3fda63c39985982d529f4176e057a04848820e73a0665fa50
 
+- table-layout-0.8.0.5@sha256:28d671445448874a5e6a7d28c2072f443bb189d655f6e0f6aae5eb5df646d41a,5693
+- data-default-instances-base-0.1.0.1@sha256:985a13d7103e45a65f06f277b735ef025636014f0d29dd6de998bc7628e09be9,509
 # Override default flag values for local packages and extra-deps
 # flags: {}
 

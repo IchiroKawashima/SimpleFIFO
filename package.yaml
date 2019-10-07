@@ -27,7 +27,8 @@ dependencies:
 - clash-ghc
 - clash-lib
 - clash-prelude
-- text
+
+- table-layout
 
 library:
   source-dirs: src

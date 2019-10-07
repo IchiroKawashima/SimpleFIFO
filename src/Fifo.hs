@@ -7,10 +7,13 @@ module Fifo
 where
 
 import           Clash.Prelude
-import           Data.Maybe                     ( isJust
-                                                , fromMaybe
-                                                )
+import           Data.Maybe                     ( isJust )
 import           Control.Monad                  ( guard )
+
+import           Utils
+
+import qualified Data.List                     as L
+import           Debug.Trace
 
 fifo
     :: forall dom addressSize a
@@ -18,27 +21,20 @@ fifo
     => SNat addressSize
     -> Signal dom (Maybe a, Bool)
     -> Signal dom (Bool, Maybe a)
-fifo addressSize@SNat (unbundle -> (inputData, outputReady)) = tr
+fifo addressSize@SNat (unbundle -> (inputData, outputReady)) = trace tr
     $ bundle (inputReady, outputData)
   where
-    tr =
-        seq
-            $     traceSignal "inputData"
-            $     fromMaybe undefined
-            <$>   inputData
-            `seq` traceSignal "inputReady" inputReady
-            `seq` traceSignal "outputData"
-            $     fromMaybe undefined
-            <$>   outputData
-            `seq` traceSignal "outputReady" outputReady
-            `seq` traceSignal "put"         put
-            `seq` traceSignal "get"         get
-            `seq` traceSignal "nxt_waddr"   nextWriteAddress
-            `seq` traceSignal "nxt_raddr"   nextReadAddress
-            `seq` traceSignal "raddr"       writeAddress
-            `seq` traceSignal "waddr"       readAddress
-            `seq` traceSignal "full"        isFull
-            `seq` traceSignal "empty"       isEmpty
+    tr = makeTable
+        10
+        [ ("put"    , ShownSignal put)
+        , ("get"    , ShownSignal get)
+        , ("n_waddr", ShownSignal nextWriteAddress)
+        , ("n_raddr", ShownSignal nextReadAddress)
+        , ("waddr"  , ShownSignal writeAddress)
+        , ("raddr"  , ShownSignal nextWriteAddress)
+        , ("full"   , ShownSignal isFull)
+        , ("empty"  , ShownSignal isEmpty)
+        ]
 
     put = (isJust <$> inputData) .&&. (not <$> isFull)
     get = outputReady .&&. (not <$> isEmpty)
