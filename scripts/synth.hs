@@ -14,17 +14,19 @@ import           Shelly
 import           Options.Applicative.Simple
 import           Control.Applicative
 import           Data.Monoid
+import           Data.Maybe
 import qualified Data.Text                     as T
 default (T.Text)
 
 main :: IO ()
 main = do
-    ((), ()) <- simpleOptions "ver 1.0"
-                              "Synth"
-                              "Synthesise topEntity module."
-                              (pure ())
-                              empty
+    (file,()) <- simpleOptions
+        "ver 2.0"
+        "synth.hs"
+        "Synthesise topEntity module."
+        (optional $ argument str $ metavar "FILE" <> help "File to synhesise")
+        empty
 
     shelly $ escaping False $ run_
         "stack exec -- clash"
-        ["--verilog", "-isrc", "-outputdir build", "app/Main.hs"]
+        ["--verilog", "-isrc", "-outputdir build", fromMaybe "app/Main.hs" file]
